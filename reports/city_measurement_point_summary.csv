@@ -1,0 +1,9 @@
+city_key,city,number_of_points,number_of_files,latitude_min,latitude_max,longitude_min,longitude_max
+ahmedabad,Ahmedabad,9,9,22.3061,23.1041,72.5373,73.1826
+bengaluru,Bengaluru,10,10,12.9367,13.0233,77.5411,77.6359
+bhopal,Bhopal,10,10,23.2129,23.3055,77.3357,77.483
+bhubaneswar,Bhubaneswar,10,10,20.2502,20.2883,85.8067,85.861
+chandigarh,Chandigarh,10,10,30.7005,30.7607,76.7358,76.8143
+chennai,Chennai,10,10,12.9497,13.1457,80.1706,80.2869
+coimbatore,Coimbatore,10,10,10.9641,11.1272,76.9042,77.0601
+delhi,Delhi,20,20,28.447,28.729,76.9792,77.4537

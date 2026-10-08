@@ -1,0 +1,1 @@
+location_id,district,state,date,latitude,longitude,rainfall_mm,avg_temp_c,max_temp_c,min_temp_c,humidity_pct,aqi,pm25,ndvi,rainfall_anomaly_mm,temperature_anomaly_c,source,data_quality_flag

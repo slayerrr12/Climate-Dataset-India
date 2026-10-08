@@ -1,0 +1,37 @@
+field,dtype,definition_and_handling
+city,str,Standardized city name parsed from filename; spelling variants normalized.
+state,str,State/territory mapped from the recognized city. This field is not in source headers.
+district,object,Unavailable in source; intentionally null.
+date,datetime64[us],"Month-start timestamp identifying the monthly summary period, not a daily observation."
+rainfall_mm,float64,PRECTOTCORR monthly mean daily precipitation rate; unit is mm/day.
+avg_temp_c,float64,"T2M monthly average 2 m temperature, °C."
+max_temp_c,float64,"T2M_MAX monthly mean of daily maximum temperature, °C."
+min_temp_c,float64,"T2M_MIN monthly mean of daily minimum temperature, °C."
+humidity_pct,float64,Unavailable. QV2M is specific humidity and is not treated as relative humidity.
+aqi,float64,Unavailable in NASA/POWER files.
+pm25,float64,Unavailable in NASA/POWER files.
+ndvi,float64,Unavailable in NASA/POWER files.
+rainfall_anomaly_mm,float64,"PRECTOTCORR minus city and calendar-month 2000–2025 mean, only with at least 10 available years; retains mm/day rate units."
+temperature_anomaly_c,float64,"T2M minus city and calendar-month 2000–2025 mean, only with at least 10 available years."
+latitude,float64,Mean latitude of measurement-point coordinates from file headers.
+longitude,float64,Mean longitude of measurement-point coordinates from file headers.
+location_id,str,Stable IN-{state code}-{city code} identifier.
+measurement_points_available,int64,Number of point files with at least one mapped climate parameter for the city-month.
+expected_points,int64,Number of discovered measurement-point files for the city.
+data_quality_flag,str,monthly_aggregated when >=80% of expected points contribute; otherwise monthly_low_coverage.
+source,str,NASA/POWER attribution and source temporal resolution.
+ALLSKY_SFC_SW_DIFF,float64,All-sky surface shortwave diffuse irradiance (kWh/m²/day)
+ALLSKY_SFC_SW_DNI,float64,All-sky surface shortwave direct normal irradiance (kWh/m²/day)
+ALLSKY_SFC_UV_INDEX,float64,All-sky surface UV index (source-scaled index)
+ALLSKY_SRF_ALB,float64,All-sky surface albedo (dimensionless)
+CLOUD_AMT,float64,Cloud amount (%)
+CLRSKY_SFC_SW_DWN,float64,Clear-sky surface shortwave downward irradiance (kWh/m²/day)
+IMERG_PRECTOT,float64,IMERG total precipitation (mm/day)
+PRECTOTCORR,float64,MERRA-2 corrected total precipitation (mm/day)
+PS,float64,Surface pressure (kPa)
+QV2M,float64,Specific humidity at 2 m (g/kg)
+T2M,float64,Temperature at 2 m (°C)
+T2M_MAX,float64,Temperature at 2 m maximum (°C)
+T2M_MIN,float64,Temperature at 2 m minimum (°C)
+TS,float64,Earth skin temperature (°C)
+WS10M,float64,Wind speed at 10 m (m/s)

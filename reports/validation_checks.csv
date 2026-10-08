@@ -1,0 +1,9 @@
+check,passed
+city field populated,True
+state field populated,True
+one row per location-month,True
+valid latitude,True
+valid longitude,True
+date is datetime,True
+no negative precipitation,True
+temperature ordering,True

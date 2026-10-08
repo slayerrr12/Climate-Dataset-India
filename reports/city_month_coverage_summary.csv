@@ -1,0 +1,9 @@
+city_key,city,city_month_rows,first_month,last_month,mean_available_points,expected_points
+ahmedabad,Ahmedabad,312,2000-01-01,2025-12-01,9.0,9
+bengaluru,Bengaluru,312,2000-01-01,2025-12-01,10.0,10
+bhopal,Bhopal,312,2000-01-01,2025-12-01,10.0,10
+bhubaneswar,Bhubaneswar,312,2000-01-01,2025-12-01,10.0,10
+chandigarh,Chandigarh,312,2000-01-01,2025-12-01,10.0,10
+chennai,Chennai,312,2000-01-01,2025-12-01,10.0,10
+coimbatore,Coimbatore,312,2000-01-01,2025-12-01,10.0,10
+delhi,Delhi,312,2000-01-01,2025-12-01,20.0,20
