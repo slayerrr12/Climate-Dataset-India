@@ -73,6 +73,15 @@ def run_pipeline(raw_dir=RAW_DIR, output_root=None):
     annual.to_csv(interim / "point_annual_summary_long.csv", index=False, date_format="%Y-%m-%d")
     point_wide.to_csv(interim / "point_monthly_wide.csv", index=False, date_format="%Y-%m-%d")
     city.to_csv(processed / "city_monthly.csv", index=False, date_format="%Y-%m-%d")
+    # Make the point-to-city aggregation easy to inspect one city at a time.
+    # Files are split from the same validated city-month table, so they retain
+    # exactly the same columns and values as the combined deliverable.
+    by_city = processed / "by_city"
+    by_city.mkdir(parents=True, exist_ok=True)
+    for city_key, city_rows in city.groupby("city_key", sort=True):
+        city_name = str(city_rows["city"].iloc[0]).lower().replace(" ", "_")
+        city_rows.sort_values("date").to_csv(
+            by_city / f"{city_name}_monthly.csv", index=False, date_format="%Y-%m-%d")
     city.to_csv(root / "climate_monthly.csv", index=False, date_format="%Y-%m-%d")
 
     daily = pd.DataFrame({c: pd.Series(dtype=("datetime64[ns]" if c == "date" else
@@ -103,7 +112,10 @@ def run_pipeline(raw_dir=RAW_DIR, output_root=None):
 ## Transformation and aggregation
 
 - Point-month parameters are retained in long and wide forms; annual summaries are stored separately.
-- Comparable monthly gridded values are averaged across available points. Representative coordinates are arithmetic means of point coordinates.
+- Comparable monthly gridded values are averaged across available points for each city and month. This collapses every city's point files into one city-month row per month.
+- The complete combined output is `data/processed/city_monthly.csv`. The same result is also split into one easy-to-open file per city under `data/processed/by_city/` (for example, `ahmedabad_monthly.csv`). These files are views of the combined output, not a second aggregation.
+- `data/interim/point_monthly_wide.csv` preserves the point-level rows used to create the city-month table. Filter that file by `city` to compare the inputs with a city output.
+- Representative coordinates are arithmetic means of point coordinates.
 - `city` is the standardized city label, `state` is mapped from recognized city metadata, and `district` is null because the source does not contain district data.
 - Temperature anomalies compare `T2M` with the city's calendar-month mean for 2000–2025. Precipitation anomalies use the same city/calendar-month baseline and retain mm/day rate units. At least 10 valid years are required.
 
@@ -112,7 +124,7 @@ def run_pipeline(raw_dir=RAW_DIR, output_root=None):
 - Key uniqueness, populated city/state, coordinate bounds, datetime type, and non-negative precipitation are checked.
 - Detailed missingness and measurement-point coverage are saved in adjacent reports.
 - Input files contain monthly and annual summaries, not daily records. Therefore `data/processed/daily_climate.csv` has the exact requested schema but zero observations. Monthly summaries are not expanded into fabricated daily values.
-- The populated city-month result is `data/processed/city_monthly.csv`; humidity, AQI, PM2.5, NDVI, and district remain unavailable.
+- The populated city-month result is `data/processed/city_monthly.csv`, with per-city views in `data/processed/by_city/`; humidity, AQI, PM2.5, NDVI, and district remain unavailable.
 """
     (reports / "cleaning_report.md").write_text(cleaning_report, encoding="utf-8")
     quality_report = f"""# Data quality report
