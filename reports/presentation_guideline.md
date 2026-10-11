@@ -1,119 +1,203 @@
-# 10-slide presentation guide: Climate Dataset India
+# Climate Dataset India — 10-slide presentation
 
-**Audience:** general or introductory data-science audience  
-**Style:** one main idea per slide, short bullets, plain language; use the speaker prompts as simple explanations.  
-**Scope:** describe the work performed on the data. This presentation does not include exploratory data analysis.
+**Audience:** general audience or introductory data-science class
+**Style:** use the slide text as written, explain one idea at a time, and use the speaker notes as a short script. The suggested visuals are simple process diagrams or tables.
 
-## Slide 1 — Project goal
+## Slide 1 — Climate Dataset India
 
-**On the slide**
+### Put on the slide
 
-- Organize climate files from multiple locations in India.
-- Clean and combine measurement-point data by city.
-- Preserve what the source actually provides.
+**How we organized and prepared climate data for Indian cities**
 
-**Say:** “We wanted one reliable, understandable dataset for each city, while keeping the original information honest.”
+- Data source: NASA/POWER files
+- Work covered: discovery, profiling, cleaning, transformation, aggregation, and validation
+- Project result: a documented, reusable city-level dataset
 
-## Slide 2 — What data did we receive?
+### Say
 
-**On the slide**
+“This presentation explains how we took many source files and organized the information into a consistent dataset, while keeping the source meaning intact.”
 
-- NASA/POWER source files.
-- 89 CSV files covering 8 cities.
-- Each file represents a measurement point.
-- Data spans 2000–2025.
+### Simple visual
 
-**Say:** “The filename tells us which city and measurement point a file belongs to.”
+One arrow: `Source files → Clean data → City-month dataset`
 
-## Slide 3 — Data discovery: grouping the files
+## Slide 2 — The question we started with
 
-**On the slide**
+### Put on the slide
 
-- City names and point numbers were detected from filenames automatically.
-- Example: `delhi.csv`, `delhi_2.csv`, …, `delhi_20.csv` are all Delhi.
-- Point counts vary: Ahmedabad 9, most cities 10, Delhi 20.
+- The source was split across many files.
+- Each city had multiple measurement points.
+- We needed consistent city names, dates, locations, and climate fields.
+- We needed to know what the files could reliably support.
 
-**Say:** “We grouped files by city instead of treating every file as a separate city.”
+### Say
 
-## Slide 4 — Data profiling: understand before changing
+“Our first task was to understand how the files fit together. We then built a repeatable process to clean and combine them.”
 
-**On the slide**
+### Simple visual
 
-- Files contain 15 climate parameters.
-- Each parameter has monthly values and an annual summary.
-- The shared source layout stores one row per parameter and year.
-- Missing values use the documented code `-999`.
+Show several file icons grouped into one city folder.
 
-**Say:** “Profiling showed us the file structure, date coverage, variables, and missing-value code before cleaning.”
+## Slide 3 — What was in the source collection?
 
-## Slide 5 — Data cleaning: keep changes evidence-based
+### Put on the slide
 
-**On the slide**
+- 89 CSV files
+- 8 cities
+- 89 measurement-point files
+- Source years: 2000–2025
+- 15 NASA/POWER climate parameters
 
-- Standardized parameter names and numeric/date types.
-- Converted documented `-999` values to missing values.
-- Standardized known city spelling variants.
-- Checked duplicates; none were found in this collection.
-- Kept unusual values; did not fill missing climate measurements.
+| City | Points |
+|---|---:|
+| Ahmedabad | 9 |
+| Bengaluru | 10 |
+| Bhopal | 10 |
+| Bhubaneswar | 10 |
+| Chandigarh | 10 |
+| Chennai | 10 |
+| Coimbatore | 10 |
+| Delhi | 20 |
 
-**Say:** “We corrected only what the source made clear. We did not guess missing weather values or delete extremes just because they looked unusual.”
+### Say
 
-## Slide 6 — Data transformation: make the records usable
+“A file represents a measurement point, not a separate city. The number of points differs by city, so the process detects the counts from the actual filenames.”
 
-**On the slide**
+### Simple visual
 
-- Reshaped source data into a long point-month table.
-- Created a wide point-month table with one column per parameter.
-- Kept annual summaries separate from monthly values.
-- Preserved city, point, date, coordinates, and source filename.
+Use the table above; highlight that Delhi has 20 points and Ahmedabad has 9.
 
-**Say:** “These intermediate tables make it possible to check each step and trace a value back to its source file.”
+## Slide 4 — Data profiling: understand the files first
 
-## Slide 7 — Combining measurement points
+### Put on the slide
 
-**On the slide**
+- Files share a NASA/POWER header and parameter table.
+- Rows identify a climate parameter and a year.
+- `JAN` through `DEC` contain monthly summaries.
+- `ANN` contains a separate annual summary.
+- Headers provide measurement-point latitude and longitude.
+- `-999` is the documented missing-value code.
 
-- Aligned all measurement points by city and month.
-- Averaged comparable NASA/POWER values across available points.
-- Recorded available and expected point counts.
-- Calculated representative coordinates from point coordinates.
+### Say
 
-**Say:** “The final populated dataset has one row per city per month, with coverage counts showing how many points contributed.”
+“Profiling means examining the structure and values before changing anything. It showed that these files contain monthly and annual summaries.”
 
-## Slide 8 — Standardized fields and derived values
+### Simple visual
 
-**On the slide**
+Show a small mock row: `T2M | 2020 | JAN | FEB | … | DEC | ANN` and label it “monthly and annual summary.”
 
-- Added consistent city and state names and stable location IDs.
-- Mapped `T2M`, `T2M_MAX`, and `T2M_MIN` to temperature fields.
-- Used `PRECTOTCORR` for the available precipitation measure.
-- Calculated monthly anomalies against each city’s calendar-month average when at least 10 years were available.
+## Slide 5 — Data cleaning: make records consistent
 
-**Say:** “The precipitation field is a monthly mean daily rate in mm/day, not a daily observation or a monthly total. We documented that distinction.”
+### Put on the slide
 
-## Slide 9 — Data validation
+- Standardized parameter labels and numeric fields.
+- Converted year and month labels into usable dates.
+- Changed documented `-999` values into missing values.
+- Corrected known filename spellings: `ahemdabad` → Ahmedabad and `bhubhaneswar` → Bhubaneswar.
+- Checked for duplicate point-period-parameter records; none were found.
+- Did not fill missing climate values or remove extremes.
 
-**On the slide**
+### Say
 
-- Checked city-month key uniqueness.
-- Checked city/state fields and coordinate ranges.
-- Checked dates, negative precipitation, and temperature ordering.
-- All 8 validation checks passed.
+“We changed only what the source definitions supported. Missing values stayed missing, and unusual climate values were kept because they may be real.”
 
-**Say:** “Validation confirms that the populated city-month table is structurally consistent and passes the checks we defined.”
+### Simple visual
 
-## Slide 10 — Deliverables and key limitation
+Show a before-and-after pair: `-999 → blank / missing`.
 
-**On the slide**
+## Slide 6 — Data transformation: prepare useful tables
 
-- 2,496 city-month records for 8 cities.
-- Cleaned long, wide, and annual intermediate datasets are retained.
-- Reports include the data dictionary, coverage, missingness, and cleaning decisions.
-- The required daily CSV has the correct schema but zero rows.
+### Put on the slide
+
+- **Long table:** one row for one point, month, and parameter.
+- **Wide table:** one row for one point and month, with parameters in columns.
+- **Annual table:** annual summaries kept separate from monthly records.
+- Each record keeps city, point number, date, source filename, coordinates, and source.
+
+### Say
+
+“We kept intermediate tables so every step can be inspected. Annual values are stored separately so they cannot be accidentally mixed with monthly values.”
+
+### Simple visual
+
+Show three labeled boxes: `Point-month long` → `Point-month wide` → `City-month` and a separate `Annual summaries` box.
+
+## Slide 7 — Combining measurement points into city records
+
+### Put on the slide
+
+- Match records by city and month.
+- Average comparable NASA/POWER point values for the city-month summary.
+- Keep the number of contributing points and expected points.
+- Calculate representative coordinates as the mean of point coordinates.
+- Result: **2,496 city-month rows for 8 cities**.
+
+### Say
+
+“We combined comparable measurements for the same city and month. Coverage counts show how many measurement points contributed to each result.”
+
+### Simple visual
+
+Show three point values flowing into one city-month summary, with “points contributing” shown below.
+
+## Slide 8 — Standard fields and derived information
+
+### Put on the slide
+
+- City and state names are standardized; location IDs are stable.
+- `T2M` maps to average temperature.
+- `T2M_MAX` and `T2M_MIN` map to monthly summaries of daily maximum and minimum temperature.
+- `PRECTOTCORR` is a monthly mean daily precipitation rate, in **mm/day**.
+- Monthly anomalies use each city’s calendar-month average over 2000–2025, when at least 10 years are available.
+- District, relative humidity, AQI, PM2.5, and NDVI are unavailable.
+
+### Say
+
+“We kept source units and meanings clear. In particular, the precipitation field is a monthly average rate, not a daily reading or a monthly total.”
+
+### Simple visual
+
+Use a two-column table: “Available or derived” and “Unavailable from these files.”
+
+## Slide 9 — Data validation: check the result
+
+### Put on the slide
+
+- One row per location and month.
+- City and state fields are populated.
+- Coordinates fall within valid latitude and longitude ranges.
+- Dates are valid month keys.
+- Precipitation is not negative.
+- Minimum, average, and maximum temperature summaries are in order.
+- All 8 city-month validation checks passed.
+
+### Say
+
+“Validation checks that the finished table has the expected structure and that its values follow the rules we defined.”
+
+### Simple visual
+
+Show a short checklist with all items marked complete.
+
+## Slide 10 — What we delivered and what is needed next
+
+### Put on the slide
+
+- Reusable Python modules and five step-by-step notebooks.
+- Cleaned point-level intermediate tables and annual summaries.
+- A populated city-month dataset and field dictionary.
+- Quality, cleaning, coverage, and validation reports.
+- The required daily file has the correct columns but **zero rows**.
 - Daily-resolution source files are needed to create real city-day records.
 
-**Say:** “The source is monthly, so we did not invent daily values. The monthly dataset is complete at the resolution the files support; daily data requires a daily source.”
+### Say
 
-## Optional closing line
+“The source data is monthly, so it cannot provide genuine daily observations. We delivered the data at the finest reliable time level available and left the daily file empty rather than inventing values.”
 
-“The main result is a reproducible, traceable city-month dataset, with a clear explanation of what the current source can—and cannot—support.”
+### Simple visual
+
+Show the result as `2,496 city-month rows` and a separate note: `Daily data needed for a populated daily file`.
+
+## Closing sentence
+
+“The key result is a reproducible and traceable city-month dataset that preserves the information the source actually contains.”
