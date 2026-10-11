@@ -14,7 +14,7 @@ def run_pipeline(raw_dir=RAW_DIR, output_root=None):
     root = Path(output_root or PROJECT_DIR)
     interim, processed = root / "data/interim", root / "data/processed"
     reports = root / "reports"
-    for folder in (interim, processed, reports / "figures"):
+    for folder in (interim, processed, reports):
         folder.mkdir(parents=True, exist_ok=True)
 
     inventory = discover_files(raw_dir)

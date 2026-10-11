@@ -1,4 +1,4 @@
-# Climate data cleaning and analysis project
+# Climate data cleaning and transformation project
 
 This repository provides a reproducible, modular workflow for the climate files in `datasets/` (or, in a clean checkout, `data/raw/`). Raw inputs are never modified.
 
@@ -12,8 +12,8 @@ The delivered NASA/POWER files are monthly and annual summaries for 2000–2025,
 - `data/interim/`: cleaned point-month long/wide tables and annual summaries.
 - `data/processed/`: city-month product and schema-only daily deliverable.
 - `src/`: reusable ingestion, profiling, cleaning, transformation, aggregation, validation, and utility modules.
-- `notebooks/`: six staged discovery, profiling, cleaning, transformation, validation, and EDA notebooks.
-- `reports/`: data dictionary, inventories, quality summaries, and cleaning/data-quality reports.
+- `notebooks/`: five staged discovery, profiling, cleaning, transformation, and validation notebooks.
+- `reports/`: data dictionary, inventories, quality summaries, cleaning/data-quality reports, and a presentation guide.
 - `tests/`: tests for stable IDs, filename parsing, cleaning, and output validation.
 
 ## Setup and run
@@ -24,7 +24,7 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-Execute the six notebooks in order or run the pipeline from the repository root:
+Execute the five notebooks in order or run the pipeline from the repository root:
 
 ```powershell
 python -c "import sys; sys.path.insert(0, 'src'); from climate_pipeline import run_pipeline; run_pipeline()"
